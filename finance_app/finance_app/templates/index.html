@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>資産管理アプリ</title>
+</head>
+<body>
+    <h1>収支入力</h1>
+    <form method="post" action="/add">
+        日付: <input type="date" name="date" required>
+        種別: 
+        <select name="type">
+            <option value="収入">収入</option>
+            <option value="支出">支出</option>
+        </select>
+        カテゴリ: <input type="text" name="category" required>
+        金額: <input type="number" name="amount" required>
+        <input type="submit" value="追加">
+    </form>
+
+    <h2>収支一覧</h2>
+    <table border="1">
+        <tr><th>日付</th><th>種別</th><th>カテゴリ</th><th>金額</th><th>削除</th></tr>
+        {% for i, item in enumerate(income_expense) %}
+        <tr>
+            <td>{{ item.date }}</td>
+            <td>{{ item.type }}</td>
+            <td>{{ item.category }}</td>
+            <td>{{ item.amount }}</td>
+            <td><a href="/delete_income_expense/{{ i+1 }}">削除</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h1>投資入力</h1>
+    <form method="post" action="/add_investment">
+        日付: <input type="date" name="date" required>
+        銘柄コード（例: AAPL）: <input type="text" name="symbol" required>
+        金額: <input type="number" name="amount" required>
+        <input type="submit" value="追加">
+    </form>
+
+    <h2>投資一覧</h2>
+    <table border="1">
+        <tr><th>日付</th><th>銘柄</th><th>金額</th><th>チャート</th><th>削除</th></tr>
+        {% for i, item in enumerate(investments) %}
+        <tr>
+            <td>{{ item.date }}</td>
+            <td>{{ item.symbol }}</td>
+            <td>{{ item.amount }}</td>
+            <td><a href="/stock/{{ item.symbol }}">表示</a></td>
+            <td><a href="/delete_investment/{{ i+1 }}">削除</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
